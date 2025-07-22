@@ -12,7 +12,7 @@ document.querySelector('#app').innerHTML = `
         <svg style="display:none;">
         <filter id="displacementFilter">
             <feImage id="displacementMap"
-                      href="../public/assets/LiquidGlassDisplacement.png"
+                      href="/assets/LiquidGlassDisplacement.png"
                       preserveAspectRatio="none" />
     
             <feDisplacementMap in="SourceGraphic"
