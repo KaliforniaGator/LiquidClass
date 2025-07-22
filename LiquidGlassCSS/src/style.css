@@ -28,6 +28,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: center;
   min-height: 100vh;
   background-color: #242424;
   gap: 2rem;
@@ -36,11 +37,17 @@ body {
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
+  text-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+p:first-child {
+  padding: 10px;
+  background-color: #0000005f;
+  border-radius: 10px;
 }
 
 #app {
   width: 80vw;
-  height: 60vw; /* This creates the 4:3 ratio (60/80 = 0.75 = 3/4) */
+  height: 80vw; /* This creates the 4:3 ratio (60/80 = 0.75 = 3/4) */
   max-height: 75vh;
   max-width: 100vh;
   position: relative;
@@ -66,54 +73,6 @@ h1 {
   border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vanilla:hover {
-  filter: drop-shadow(0 0 2em #f7df1eaa);
-}
-
-.card {
-  position: relative;
-  padding: 2em;
-  cursor: grab;
-  user-select: none;
-  touch-action: none;
-}
-
-.card:active {
-  cursor: grabbing;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -129,8 +88,8 @@ button:focus-visible {
 
 #controls {
   display: flex;
-  gap: 1rem;
-  padding: 1rem;
+  gap: 2rem;
+  padding: 1.5rem;
   border-radius: 8px;
   border: 1.5px solid rgba(255, 255, 255, 0.2);
   background: rgba(255, 255, 255, 0.1);
@@ -138,29 +97,85 @@ button:focus-visible {
 }
 
 #controls .control-group {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
-  align-items: center;
+  align-items: start;
+}
+
+#controls .control-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#controls .control-section-title {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 0.5rem;
 }
 
 #controls label {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   gap: 0.5rem;
   font-size: 0.9rem;
 }
 
+#controls label span {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.8);
+}
+
 #controls input[type="range"] {
-  width: 100px;
+  width: 100%;
+  height: 6px;
+  -webkit-appearance: none;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  outline: none;
+}
+
+#controls input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #fff;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 #controls input[type="color"] {
-  width: 50px;
-  height: 25px;
+  width: 100%;
+  height: 30px;
   padding: 0;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  background: transparent;
+}
+
+#controls select {
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.2);
+  color: white;
+  cursor: pointer;
+  outline: none;
+}
+
+#controls select:focus {
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 .wrapper {
@@ -175,36 +190,9 @@ button:focus-visible {
 }
 
 .card {
-    width: 100%;
-    flex-wrap: wrap;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    overflow: hidden;
-    border-radius: inherit;
-    transition: opacity 0.26s ease-out;
-    border-radius: 28px;
-    background-color: rgba(255, 255, 255, 0.1);
-    filter: 
-        drop-shadow(-8px -10px 46px #0000005f)
-        drop-shadow(0 30px 40px rgba(0,0,0,0.7))
-        drop-shadow(0 15px 20px rgba(0,0,0,0.4));
-    backdrop-filter: brightness(1.1) 
-        blur(2px)
-        url(#displacementFilter);
-    box-shadow: 0 10px 25px -10px rgba(0,0,0,0.5);
+  padding: 2rem;
 }
 
-.card::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-    overflow: hidden;
-    border-radius: 28px;
-    -webkit-box-shadow: inset 2px 2px 0px -2px rgba(255, 255, 255, 0.7),
-                        inset 0 0 3px 1px rgba(255, 255, 255, 0.7);
-    box-shadow: inset 4px 6px 0px -6px rgba(255, 255, 255, 0.7),
-                inset 0 0 8px 1px rgba(255, 255, 255, 0.7);
+.demo-card {
+  width: 200px; height: 200px; display: flex; flex-direction:column; align-items: center; justify-content: center;
 }

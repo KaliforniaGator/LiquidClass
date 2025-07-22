@@ -1,24 +1,27 @@
 import './style.css'
+import { LiquidGlass } from './liquidClass.js'
 
 document.querySelector('#app').innerHTML = `
   <div>
-    <h1> Liquid Glass CSS</h1>
+    <h1>Liquid Class</h1>
     <div class="wrapper">
-      <p> A modern CSS framework for creating liquid glass effects.</p>
+      <p>A modern JS framework for creating liquid glass effects.</p>
       <div class="card">
         <div class="card-content">
+          <h3>Liquid Glass Effect</h3>
           <p>This is a demonstration of CSS Liquid Glass</p>
         </div>
-        <svg style="display:none;">
-        <filter id="displacementFilter">
-            <feImage id="displacementMap"
-                      href="/assets/LiquidGlassDisplacement.png"
-                      preserveAspectRatio="none" />
-    
-            <feDisplacementMap in="SourceGraphic"
-                            scale="100" xChannelSelector="R" yChannelSelector="G" />
-        </filter>
-    </svg>
+      </div>
+      <!-- New demo containers -->
+      <div class="demo-container" style="margin-top: 2rem; display: flex; gap: 2rem;">
+        <div id="demo1" class="demo-card">
+          <p>Demo 1</p>
+          <p>Draggable: false</p>
+        </div>
+        <div id="demo2" class="demo-card">
+          <p>Demo 2</p>
+          <p>Draggable: true</p>
+        </div>
       </div>
     </div>
   </div>
@@ -35,74 +38,98 @@ document.querySelector('#controls').innerHTML = `
       <label>Displacement Scale: 
         <input type="range" id="dispScale" min="0" max="500" value="100">
       </label>
+      <label>Displacement Type:
+        <select id="dispType">
+          <option value="image">Image</option>
+          <option value="turbulence">Turbulence</option>
+          <option value="noise">Noise</option>
+        </select>
+      </label>
+      <label>Turbulence Frequency:
+        <input type="range" id="turbFreq" min="0.001" max="0.05" step="0.001" value="0.01">
+      </label>
+      <label>Turbulence Octaves:
+        <input type="range" id="turbOct" min="1" max="5" step="1" value="2">
+      </label>
     </div>
   </div>
 `
 
-const card = document.querySelector('.card');
-let isDragging = false;
-let currentX;
-let currentY;
-let initialX;
-let initialY;
-let xOffset = 0;
-let yOffset = 0;
+const card = new LiquidGlass(document.querySelector('.card'), {
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: '20px',
+    blur: '3px',
+    brightness: 1.2,
+    displacementScale: 80,
+    draggable: false
+});
 
-card.addEventListener('mousedown', dragStart);
-document.addEventListener('mousemove', drag);
-document.addEventListener('mouseup', dragEnd);
+// Initialize liquid glass instances
+const demo1 = new LiquidGlass(document.querySelector('#demo1'), {
+    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+    borderRadius: '20px',
+    blur: '3px',
+    brightness: 1.2,
+    displacementScale: 80,
+    draggable: false
+});
 
-function dragStart(e) {
-    initialX = e.clientX - xOffset;
-    initialY = e.clientY - yOffset;
-
-    if (e.target === card) {
-        isDragging = true;
-    }
-}
-
-function drag(e) {
-    if (isDragging) {
-        e.preventDefault();
-        currentX = e.clientX - initialX;
-        currentY = e.clientY - initialY;
-
-        xOffset = currentX;
-        yOffset = currentY;
-
-        setTranslate(currentX, currentY, card);
-    }
-}
-
-function dragEnd() {
-    isDragging = false;
-}
-
-function setTranslate(xPos, yPos, el) {
-    el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
-}
+const demo2 = new LiquidGlass(document.querySelector('#demo2'), {
+    backgroundColor: 'rgba(100, 108, 255, 0.1)',
+    borderRadius: '12px',
+    blur: '5px',
+    brightness: 1.3,
+    displacementScale: 120
+});
 
 // Control handlers
 const bgColorInput = document.querySelector('#bgColor');
 const opacityInput = document.querySelector('#opacity');
 const dispScaleInput = document.querySelector('#dispScale');
+const dispTypeSelect = document.querySelector('#dispType');
+const turbFreqInput = document.querySelector('#turbFreq');
+const turbOctInput = document.querySelector('#turbOct');
 
 function updateCardStyle() {
     const color = bgColorInput.value;
-    const opacity = opacityInput.value;
-    const hexOpacity = Math.round(opacity * 2.55).toString(16).padStart(2, '0');
-    card.style.backgroundColor = `${color}${hexOpacity}`;
+    const opacity = opacityInput.value / 100;
+    demo1.setBackgroundColor(color, opacity);
+    demo2.setBackgroundColor(color, opacity);
 }
 
 function updateDisplacementScale() {
     const scale = dispScaleInput.value;
-    const filter = document.querySelector('#displacementFilter feDisplacementMap');
-    filter.setAttribute('scale', scale);
+    demo1.setDisplacementScale(scale);
+    demo2.setDisplacementScale(scale);
+}
+
+function updateDisplacementType() {
+    const type = dispTypeSelect.value;
+    demo1.setDisplacementType(type, {
+        turbulenceFrequency: parseFloat(turbFreqInput.value),
+        turbulenceOctaves: parseInt(turbOctInput.value)
+    });
+    demo2.setDisplacementType(type, {
+        turbulenceFrequency: parseFloat(turbFreqInput.value),
+        turbulenceOctaves: parseInt(turbOctInput.value)
+    });
+}
+
+function updateTurbulence() {
+    if (['turbulence', 'noise'].includes(dispTypeSelect.value)) {
+        const frequency = parseFloat(turbFreqInput.value);
+        const octaves = parseInt(turbOctInput.value);
+        demo1.setTurbulenceParameters(frequency, octaves);
+        demo2.setTurbulenceParameters(frequency, octaves);
+    }
 }
 
 bgColorInput.addEventListener('input', updateCardStyle);
 opacityInput.addEventListener('input', updateCardStyle);
 dispScaleInput.addEventListener('input', updateDisplacementScale);
+dispTypeSelect.addEventListener('change', updateDisplacementType);
+turbFreqInput.addEventListener('input', updateTurbulence);
+turbOctInput.addEventListener('input', updateTurbulence);
 
 // Initial style application
 updateCardStyle();
