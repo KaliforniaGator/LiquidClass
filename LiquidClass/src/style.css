@@ -24,14 +24,15 @@ a:hover {
 
 body {
   margin: 0;
-  padding: 0px 25px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   text-align: center;
   min-height: 100vh;
+  height: 100vh;
+  box-sizing: border-box;
   background-color: #242424;
+  overflow: hidden;
 }
 
 h1 {
@@ -52,10 +53,10 @@ p:first-child {
 }
 
 #app {
-  width: 90vw;
-  height: 80vw; /* This creates the 4:3 ratio (60/80 = 0.75 = 3/4) */
-  max-height: 80vh;
+  width: 100%;
+  height: 100%;
   position: relative;
+  box-sizing: border-box;
   background: rgba(255, 255, 255, 0.1) url("https://4kwallpapers.com/images/wallpapers/macos-big-sur-apple-layers-fluidic-colorful-wwdc-stock-2880x1800-1455.jpg");
   background-size: cover;
   background-position: center;
@@ -66,6 +67,27 @@ p:first-child {
   align-items: center;
   overflow: hidden;
   box-shadow: 0 10px 25px -10px rgba(0, 0, 0, 0.5);
+  padding: 25px;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  will-change: transform;
+}
+
+@media (min-width: 1024px) {
+  #app {
+    flex: 1;
+    height: 100%;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  #app {
+    max-width: 95vw;
+    min-height: min-content;
+    height: auto;
+    padding: 15px;
+    transform: translateZ(0);
+  }
 }
 
 #app::after {
@@ -78,6 +100,43 @@ p:first-child {
   border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
+#app-content {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 1rem;
+  
+}
+
+@media (max-width: 1023px) {
+  #app-content {
+    min-height: 100%;
+    height: auto;
+    padding: 2rem 1rem;
+    flex-direction: column;
+  }
+
+  .demo-container {
+    margin-top: 2rem;
+    display: flex;
+    gap: 2rem;
+    flex-direction: column;
+  }
+}
+
+#video-player {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  position: absolute;
+}
 
 
 @media (prefers-color-scheme: light) {
@@ -98,28 +157,36 @@ p:first-child {
   flex-direction: column;
   gap: 2rem;
   width: 100%;
+  height: 100%;
   margin: 0;
+  padding: 1rem;
+  box-sizing: border-box;
+  overflow: auto;
 }
 
 @media (min-width: 1024px) {
   .main-container {
     flex-direction: row;
-    align-items: flex-start;
+    align-items: stretch;
     gap: 2rem;
+    height: 100%;
   }
 
-  #app {
-    flex: 2;  /* Takes up twice as much space as the controls */
-  }
-
-  #controls {
-    flex: 1;  /* Takes up half as much space as the app */
-    width: 100%;
-    min-width: 100px;  /* Ensures controls don't get too narrow */
+  .sidebar {
+    width: 25vw;
+    min-width: 300px;
+    max-width: 400px;
+    height: 100%;
   }
 }
 
-#controls {
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+#controls, #settings {
   display: flex;
   gap: 2rem;
   padding: 2rem;
@@ -127,6 +194,57 @@ p:first-child {
   border: 1.5px solid rgba(255, 255, 255, 0.2);
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+#settings {
+  height: calc(100% - 200px);
+  overflow-y: auto;
+  flex: 1;
+}
+
+@media (max-width: 1023px) {
+  #settings, #controls {
+    padding: 1rem;
+    align-items: center;
+  }
+  
+  #settings {
+    height: auto;
+    min-height: min-content;
+    overflow-y: visible;
+    justify-content: center;
+  }
+  
+  .settings-list {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    justify-content: center;
+  }
+  
+  .setting-item {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+}
+
+/* Styling the scrollbar for settings */
+#settings::-webkit-scrollbar {
+  width: 8px;
+}
+
+#settings::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+}
+
+#settings::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 4px;
+}
+
+#settings::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 #controls .control-group {
@@ -187,7 +305,7 @@ p:first-child {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
-#controls input[type="color"] {
+  #controls input[type="color"] {
   width: 100%;
   height: 30px;
   padding: 0;
@@ -197,7 +315,22 @@ p:first-child {
   background: transparent;
 }
 
-#controls select {
+.settings-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+  width: 100%;
+  padding-bottom: 25px;
+}
+
+.setting-item {
+  padding: 0.75rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.8);
+}#controls select {
   width: 100%;
   padding: 0.5rem;
   border-radius: 4px;
@@ -221,11 +354,27 @@ p:first-child {
   justify-content: center;
   width: 100%;
   height: 100%;
+  gap: 1rem;
 }
+
+@media (min-width: 1024px) {
+  .wrapper {
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+}
+
 
 .card {
   padding: 2rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.demo-container {
+  margin-top: 2rem; 
+  display: flex; 
+  gap: 2rem;
 }
 
 .demo-card {
@@ -236,7 +385,10 @@ p:first-child {
   align-items: center; 
   justify-content: center;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  flex-shrink: 0;
 }
+
+
 
 .icon {
   width: 100px; 

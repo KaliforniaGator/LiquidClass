@@ -12,7 +12,18 @@ export class LiquidClass {
             displacementType: options.displacementType || 'image', // 'image', 'turbulence', or 'noise'
             displacementImage: options.displacementImage || '/assets/LiquidClassDisplacement.png',
             turbulenceFrequency: options.turbulenceFrequency || 0.01,
-            turbulenceOctaves: options.turbulenceOctaves || 2
+            turbulenceOctaves: options.turbulenceOctaves || 2,
+            // Drop shadow options
+            dropShadowOpacity: options.dropShadowOpacity || 0.37, // 0.37 is equivalent to #0000005f
+            dropShadowX: options.dropShadowX || -8,
+            dropShadowY: options.dropShadowY || -10,
+            shadowStrength: options.shadowStrength || 1.0, // Overall shadow intensity
+            // Shadow layer ratios (relative to main shadow)
+            shadowLayers: options.shadowLayers || [
+                { x: 1, y: 1, blur: 46, opacity: 1 },     // Top shadow
+                { x: 0, y: -3.75, blur: 40, opacity: 1.89 }, // Middle shadow
+                { x: 0, y: -1.875, blur: 20, opacity: 1.08 }  // Bottom shadow
+            ]
         };
         
         this.browser = this._detectBrowser();
@@ -33,11 +44,7 @@ export class LiquidClass {
         
         if (this.browser.supportsAdvancedEffects) {
             // Chrome and other supported browsers get the full effect
-            this.element.style.filter = `
-                drop-shadow(-8px -10px 46px #0000005f)
-                drop-shadow(0 30px 40px rgba(0,0,0,0.7))
-                drop-shadow(0 15px 20px rgba(0,0,0,0.4))
-            `;
+            this.element.style.filter = this._generateShadowLayers();
             this.element.style.backdropFilter = `
                 brightness(${this.options.brightness})
                 blur(${this.options.blur})
@@ -152,6 +159,33 @@ export class LiquidClass {
     setBackgroundColor(color, opacity = 1) {
         const rgba = this._hexToRGBA(color, opacity);
         this.element.style.backgroundColor = rgba;
+    }
+
+    setDropShadowParameters(x, y, opacity, strength = this.options.shadowStrength) {
+        this.options.dropShadowX = x;
+        this.options.dropShadowY = y;
+        this.options.dropShadowOpacity = opacity;
+        this.options.shadowStrength = strength;
+        
+        if (this.browser.supportsAdvancedEffects) {
+            this.element.style.filter = this._generateShadowLayers();
+        }
+    }
+
+    setShadowStrength(strength) {
+        this.options.shadowStrength = strength;
+        if (this.browser.supportsAdvancedEffects) {
+            this.element.style.filter = this._generateShadowLayers();
+        }
+    }
+
+    _generateShadowLayers() {
+        return this.options.shadowLayers.map(layer => {
+            const x = this.options.dropShadowX * layer.x;
+            const y = this.options.dropShadowY * layer.y;
+            const opacity = this.options.dropShadowOpacity * layer.opacity * this.options.shadowStrength;
+            return `drop-shadow(${x}px ${y}px ${layer.blur}px rgba(0,0,0,${opacity}))`;
+        }).join('\n');
     }
 
     _hexToRGBA(hex, opacity) {

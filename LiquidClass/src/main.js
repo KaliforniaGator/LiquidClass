@@ -13,7 +13,7 @@ document.querySelector('#app-content').innerHTML = `
         </div>
       </div>
       <!-- New demo containers -->
-      <div class="demo-container" style="margin-top: 2rem; display: flex; gap: 2rem;">
+      <div class="demo-container">
         <div id="demo1" class="demo-card">
           <h3>Demo 1</h3>
           <img src="https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/4a2f1b4c5001a04f4cd2e54f7116d16c_low_res_Finder_Beta_2__Liquid_Glass_.png" alt="Demo 1 Image" class="icon">
@@ -42,7 +42,6 @@ document.querySelector('#controls').innerHTML = `
         <select id="dispType">
           <option value="image">Image</option>
           <option value="turbulence">Turbulence</option>
-          <option value="noise">Noise</option>
         </select>
       </label>
       <label>Turbulence Frequency:
@@ -79,7 +78,8 @@ const demo2 = new LiquidClass(document.querySelector('#demo2'), {
     borderRadius: '12px',
     blur: '2px',
     brightness: 1.3,
-    displacementScale: 120
+    displacementScale: 120,
+    dropShadowOpacity: 0.5
 });
 
 // Control handlers

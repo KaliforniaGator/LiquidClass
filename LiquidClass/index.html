@@ -10,8 +10,37 @@
     <div class="main-container">
       <div id="app">
         <div id="app-content"></div>
+        <video id="video-player" autoplay loop muted playsinline>
+          <source src="/assets/background.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
       </div>
-      <div id="controls"></div>
+      <div class="sidebar">
+        <div id="controls"></div>
+        <div id="settings">
+          <div class="control-section">
+            <h3 class="control-section-title">API Settings</h3>
+            <p>Here's a list of settings Liquid Class supports:</p>
+            <div class="settings-list">
+              <div class="setting-item">backgroundColor</div>
+              <div class="setting-item">borderRadius</div>
+              <div class="setting-item">blur</div>
+              <div class="setting-item">brightness</div>
+              <div class="setting-item">displacementScale</div>
+              <div class="setting-item">draggable</div>
+              <div class="setting-item">displacementType</div>
+              <div class="setting-item">displacementImage</div>
+              <div class="setting-item">turbulenceFrequency</div>
+              <div class="setting-item">turbulenceOctaves</div>
+              <div class="setting-item">dropShadowOpacity</div>
+              <div class="setting-item">dropShadowX</div>
+              <div class="setting-item">dropShadowY</div>
+              <div class="setting-item">shadowStrength</div>
+              <div class="setting-item">shadowLayers</div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <script type="module" src="/src/main.js"></script>
   </body>
