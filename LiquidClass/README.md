@@ -14,9 +14,11 @@ A modern JavaScript library for creating stunning liquid glass style effects wit
 
 ## Installation
 
-- Download `LiquidClass/src/liquidClass.js`
+Download `LiquidClass/src/liquidClass.js`
 
-- ```bash
+Or install via npm:
+
+```bash
 npm i liquid-class
 ```
 
