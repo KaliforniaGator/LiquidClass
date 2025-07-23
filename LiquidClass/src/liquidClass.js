@@ -1,4 +1,4 @@
-export class LiquidGlass {
+export class LiquidClass {
     constructor(element, options = {}) {
         this.element = element;
         this.options = {
@@ -10,7 +10,7 @@ export class LiquidGlass {
             draggable: options.draggable !== undefined ? options.draggable : true,
             // New displacement options
             displacementType: options.displacementType || 'image', // 'image', 'turbulence', or 'noise'
-            displacementImage: options.displacementImage || '/assets/LiquidGlassDisplacement.png',
+            displacementImage: options.displacementImage || '/assets/LiquidClassDisplacement.png',
             turbulenceFrequency: options.turbulenceFrequency || 0.01,
             turbulenceOctaves: options.turbulenceOctaves || 2
         };

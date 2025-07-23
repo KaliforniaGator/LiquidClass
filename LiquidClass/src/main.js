@@ -1,5 +1,5 @@
 import './style.css'
-import { LiquidGlass } from './liquidClass.js'
+import { LiquidClass } from './liquidClass.js'
 
 document.querySelector('#app').innerHTML = `
   <div>
@@ -55,7 +55,7 @@ document.querySelector('#controls').innerHTML = `
   </div>
 `
 
-const card = new LiquidGlass(document.querySelector('.card'), {
+const card = new LiquidClass(document.querySelector('.card'), {
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
     borderRadius: '20px',
     blur: '3px',
@@ -65,7 +65,7 @@ const card = new LiquidGlass(document.querySelector('.card'), {
 });
 
 // Initialize liquid glass instances
-const demo1 = new LiquidGlass(document.querySelector('#demo1'), {
+const demo1 = new LiquidClass(document.querySelector('#demo1'), {
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
     borderRadius: '20px',
     blur: '3px',
@@ -74,7 +74,7 @@ const demo1 = new LiquidGlass(document.querySelector('#demo1'), {
     draggable: false
 });
 
-const demo2 = new LiquidGlass(document.querySelector('#demo2'), {
+const demo2 = new LiquidClass(document.querySelector('#demo2'), {
     backgroundColor: 'rgba(100, 108, 255, 0.1)',
     borderRadius: '12px',
     blur: '5px',

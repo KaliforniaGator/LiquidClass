@@ -1,0 +1,34 @@
+{
+  "name": "liquid-class-effect",
+  "version": "1.0.0",
+  "description": "A modern JavaScript library for creating stunning liquid class effects with customizable displacement maps",
+  "type": "module",
+  "main": "src/liquidClass.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "glass-effect",
+    "liquid",
+    "glassmorphism",
+    "ui",
+    "animation",
+    "displacement",
+    "svg-filter"
+  ],
+  "author": "Rafael Rivera",
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^7.0.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaliforniaGator/LiquidClass.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kaliforniaGator/LiquidClass/issues"
+  },
+  "homepage": "https://github.com/kaliforniaGator/LiquidClass#readme"
+}
