@@ -1,5 +1,5 @@
 {
-  "name": "liquid-class-effect",
+  "name": "liquid-class",
   "version": "1.0.0",
   "description": "A modern JavaScript library for creating stunning liquid class effects with customizable displacement maps",
   "type": "module",
@@ -18,7 +18,7 @@
     "displacement",
     "svg-filter"
   ],
-  "author": "Rafael Rivera",
+  "author": "KaliforniaGator",
   "license": "MIT",
   "devDependencies": {
     "vite": "^7.0.4"
