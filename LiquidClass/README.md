@@ -2,8 +2,6 @@
 
 A modern JavaScript library for creating stunning liquid glass style effects with customizable displacement maps. Add beautiful, interactive liquid effects to your web applications with minimal setup.
 
-![Liquid Class Effect Demo](LiquidGlassGradient.png)
-
 ## Features
 
 - 🎨 Beautiful glass effect with customizable properties
@@ -16,14 +14,14 @@ A modern JavaScript library for creating stunning liquid glass style effects wit
 
 ## Installation
 
-```bash
-npm install liquid-class-effect
-```
+- Download `LiquidClass/src/liquidClass.js`
+
 
 ## Basic Usage
 
 ```javascript
-import { LiquidClass } from 'LiquidClass';
+// Include the script in your HTML
+<script src="path/to/liquidClass.js"></script>
 
 // Get your element
 const element = document.querySelector('.my-glass-element');
@@ -56,6 +54,26 @@ const liquidEffect = new LiquidClass(element, {
 | displacementImage | string | '/assets/LiquidGlassDisplacement.png' | Path to displacement image |
 | turbulenceFrequency | number | 0.01 | Frequency for turbulence/noise effect |
 | turbulenceOctaves | number | 2 | Number of octaves for turbulence/noise |
+| dropShadowOpacity | number | 0.37 | Opacity of the drop shadow |
+| dropShadowX | number | -8 | Horizontal offset of the drop shadow |
+| dropShadowY | number | -10 | Vertical offset of the drop shadow |
+| shadowStrength | number | 1.0 | Overall shadow intensity multiplier |
+| shadowLayers | array | See description | Array of shadow layer configurations for multi-layered shadows |
+
+### Shadow Layers Configuration
+The `shadowLayers` option accepts an array of objects with the following structure:
+```javascript
+[
+    { x: 1, y: 1, blur: 46, opacity: 1 },      // Top shadow
+    { x: 0, y: -3.75, blur: 40, opacity: 1.89 }, // Middle shadow
+    { x: 0, y: -1.875, blur: 20, opacity: 1.08 }  // Bottom shadow
+]
+```
+Each layer object has the following properties:
+- `x`: Horizontal offset multiplier relative to dropShadowX
+- `y`: Vertical offset multiplier relative to dropShadowY
+- `blur`: Blur radius in pixels
+- `opacity`: Opacity multiplier relative to dropShadowOpacity
 
 ## Methods
 
@@ -95,6 +113,18 @@ Adjust turbulence parameters when using turbulence or noise displacement:
 liquidEffect.setTurbulenceParameters(0.02, 3);
 ```
 
+### setDropShadowParameters(x, y, opacity, strength)
+Adjust the drop shadow parameters:
+```javascript
+liquidEffect.setDropShadowParameters(-8, -10, 0.37, 1.0);
+```
+
+### setShadowStrength(strength)
+Adjust the overall shadow intensity:
+```javascript
+liquidEffect.setShadowStrength(1.5);
+```
+
 ## Browser Support and Compatibility
 
 The Liquid Class Effect provides different experiences based on browser capabilities:
@@ -122,4 +152,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the GNU Affero General Public License v3.0 (AGPL-3.0). This means that any modifications to the code, as well as any network service that uses this code, must be made available under the same license. See the LICENSE file for details.
