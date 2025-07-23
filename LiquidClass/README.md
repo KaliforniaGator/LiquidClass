@@ -23,7 +23,7 @@ npm install liquid-class-effect
 ## Basic Usage
 
 ```javascript
-import { LiquidClass } from 'liquid-class-effect';
+import { LiquidClass } from 'LiquidClass';
 
 // Get your element
 const element = document.querySelector('.my-glass-element');
@@ -95,14 +95,26 @@ Adjust turbulence parameters when using turbulence or noise displacement:
 liquidEffect.setTurbulenceParameters(0.02, 3);
 ```
 
-## Browser Support
+## Browser Support and Compatibility
 
-The Liquid Glass Effect works in all modern browsers that support SVG filters and CSS backdrop-filter:
+The Liquid Class Effect provides different experiences based on browser capabilities:
 
-- Chrome 76+
-- Firefox 70+
-- Safari 9+
-- Edge 79+
+### Chrome-based Browsers (Chrome, Edge, Opera)
+- Full support for all features including:
+  - Advanced glass refraction effects
+  - SVG displacement filters
+  - Complex shadow effects
+  - All displacement types (image, turbulence, noise)
+
+### Firefox and Safari
+- Fallback experience with:
+  - Basic glass effect
+  - Blur and brightness
+  - Simplified shadows
+  - Basic backdrop filters
+  - No displacement effects (due to SVG filter limitations)
+
+The fallback version automatically activates in Firefox and Safari to ensure a consistent and stable experience across all platforms.
 
 ## Contributing
 

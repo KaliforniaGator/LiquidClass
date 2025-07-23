@@ -1,7 +1,7 @@
 import './style.css'
 import { LiquidClass } from './liquidClass.js'
 
-document.querySelector('#app').innerHTML = `
+document.querySelector('#app-content').innerHTML = `
   <div>
     <h1>Liquid Class</h1>
     <div class="wrapper">
@@ -15,11 +15,11 @@ document.querySelector('#app').innerHTML = `
       <!-- New demo containers -->
       <div class="demo-container" style="margin-top: 2rem; display: flex; gap: 2rem;">
         <div id="demo1" class="demo-card">
-          <p>Demo 1</p>
-          <p>Draggable: false</p>
+          <h3>Demo 1</h3>
+          <img src="https://parsefiles.back4app.com/JPaQcFfEEQ1ePBxbf6wvzkPMEqKYHhPYv8boI1Rc/4a2f1b4c5001a04f4cd2e54f7116d16c_low_res_Finder_Beta_2__Liquid_Glass_.png" alt="Demo 1 Image" class="icon">
         </div>
         <div id="demo2" class="demo-card">
-          <p>Demo 2</p>
+          <h3>Demo 2</h3>
           <p>Draggable: true</p>
         </div>
       </div>
@@ -61,14 +61,14 @@ const card = new LiquidClass(document.querySelector('.card'), {
     blur: '3px',
     brightness: 1.2,
     displacementScale: 80,
-    draggable: false
+    draggable: true
 });
 
 // Initialize liquid glass instances
 const demo1 = new LiquidClass(document.querySelector('#demo1'), {
     backgroundColor: 'rgba(255, 255, 255, 0.1)',
     borderRadius: '20px',
-    blur: '3px',
+    blur: '8px',
     brightness: 1.2,
     displacementScale: 80,
     draggable: false
@@ -77,7 +77,7 @@ const demo1 = new LiquidClass(document.querySelector('#demo1'), {
 const demo2 = new LiquidClass(document.querySelector('#demo2'), {
     backgroundColor: 'rgba(100, 108, 255, 0.1)',
     borderRadius: '12px',
-    blur: '5px',
+    blur: '2px',
     brightness: 1.3,
     displacementScale: 120
 });

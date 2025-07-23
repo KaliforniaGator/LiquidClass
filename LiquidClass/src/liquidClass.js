@@ -15,6 +15,8 @@ export class LiquidClass {
             turbulenceOctaves: options.turbulenceOctaves || 2
         };
         
+        this.browser = this._detectBrowser();
+        
         this.xOffset = 0;
         this.yOffset = 0;
         this.isDragging = false;
@@ -28,17 +30,41 @@ export class LiquidClass {
         this.element.style.overflow = 'hidden';
         this.element.style.borderRadius = this.options.borderRadius;
         this.element.style.backgroundColor = this.options.backgroundColor;
-        this.element.style.filter = `
-            drop-shadow(-8px -10px 46px #0000005f)
-            drop-shadow(0 30px 40px rgba(0,0,0,0.7))
-            drop-shadow(0 15px 20px rgba(0,0,0,0.4))
-        `;
-        this.element.style.backdropFilter = `
-            brightness(${this.options.brightness})
-            blur(${this.options.blur})
-            url(#displacementFilter)
-        `;
-        this.element.style.boxShadow = '0 10px 25px -10px rgba(0,0,0,0.5)';
+        
+        if (this.browser.supportsAdvancedEffects) {
+            // Chrome and other supported browsers get the full effect
+            this.element.style.filter = `
+                drop-shadow(-8px -10px 46px #0000005f)
+                drop-shadow(0 30px 40px rgba(0,0,0,0.7))
+                drop-shadow(0 15px 20px rgba(0,0,0,0.4))
+            `;
+            this.element.style.backdropFilter = `
+                brightness(${this.options.brightness})
+                blur(${this.options.blur})
+                url(#displacementFilter)
+            `;
+            this.element.style.boxShadow = '0 10px 25px -10px rgba(0,0,0,0.5)';
+        } else {
+            // Firefox and Safari fallback
+            this.element.style.backdropFilter = `
+                brightness(${this.options.brightness})
+                blur(${this.options.blur})
+            `;
+            this.element.style.boxShadow = `
+                0 8px 15px -8px rgba(0,0,0,0.3),
+                -4px -6px 20px rgba(0,0,0,0.2),
+                0 15px 20px rgba(0,0,0,0.25),
+                0 8px 10px rgba(0,0,0,0.2)
+            `;
+            // Add a subtle gradient overlay for depth
+            this.element.style.background = `
+                linear-gradient(
+                    145deg,
+                    ${this._adjustOpacity(this.options.backgroundColor, 1.2)},
+                    ${this._adjustOpacity(this.options.backgroundColor, 0.8)}
+                )
+            `;
+        }
         
         // Add inner glow effect
         const before = document.createElement('div');
@@ -113,10 +139,13 @@ export class LiquidClass {
     }
 
     setDisplacementScale(scale) {
-        const filter = document.querySelector('#displacementFilter feDisplacementMap');
-        if (filter) {
-            filter.setAttribute('scale', scale);
-            this.options.displacementScale = scale;
+        this.options.displacementScale = scale;
+        
+        if (this.browser.supportsAdvancedEffects) {
+            const filter = document.querySelector('#displacementFilter feDisplacementMap');
+            if (filter) {
+                filter.setAttribute('scale', scale);
+            }
         }
     }
 
@@ -184,10 +213,12 @@ export class LiquidClass {
             this.options.turbulenceOctaves = options.turbulenceOctaves;
         }
 
-        // Recreate the filter with new settings
-        const svg = document.querySelector('svg');
-        if (svg) {
-            svg.innerHTML = this._createFilterMarkup();
+        if (this.browser.supportsAdvancedEffects) {
+            // Recreate the filter with new settings
+            const svg = document.querySelector('svg');
+            if (svg) {
+                svg.innerHTML = this._createFilterMarkup();
+            }
         }
     }
 
@@ -200,10 +231,34 @@ export class LiquidClass {
         this.options.turbulenceFrequency = frequency;
         this.options.turbulenceOctaves = octaves;
 
-        // Update the filter
-        const svg = document.querySelector('svg');
-        if (svg) {
-            svg.innerHTML = this._createFilterMarkup();
+        if (this.browser.supportsAdvancedEffects) {
+            // Update the filter
+            const svg = document.querySelector('svg');
+            if (svg) {
+                svg.innerHTML = this._createFilterMarkup();
+            }
         }
+    }
+
+    _detectBrowser() {
+        const userAgent = window.navigator.userAgent.toLowerCase();
+        const safari = /^((?!chrome|android).)*safari/i.test(userAgent);
+        const firefox = userAgent.indexOf('firefox') > -1;
+        
+        return {
+            supportsAdvancedEffects: !(safari || firefox),
+            isSafari: safari,
+            isFirefox: firefox
+        };
+    }
+
+    _adjustOpacity(rgba, factor) {
+        const match = rgba.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([0-9.]+))?\)/);
+        if (match) {
+            const [, r, g, b, a = "1"] = match;
+            const newOpacity = Math.min(parseFloat(a) * factor, 1);
+            return `rgba(${r}, ${g}, ${b}, ${newOpacity})`;
+        }
+        return rgba;
     }
 }
