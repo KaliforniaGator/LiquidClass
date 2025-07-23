@@ -1,6 +1,6 @@
 # LiquidClass
 
-[![Watch Demo](Preview/Preview.jpg)](Preview/Preview.mov)
+[![Watch Demo](Preview/Preview.jpg)](https://youtu.be/ZN_RpEspkPM)
 
 This repository contains the LiquidClass project.
 
