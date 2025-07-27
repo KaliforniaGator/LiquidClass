@@ -2,7 +2,7 @@
 
 [![Watch Demo](Preview/Preview.jpg)](https://youtu.be/ZN_RpEspkPM)
 
-# [LIVE DEMO](https://kaliforniagator.github.io/)
+# [LIVE DEMO](https://kaliforniagator.github.io/) (Only works on chrome-based browsers due to SVG Filter issues)
 
 This repository contains the LiquidClass project.
 
