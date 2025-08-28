@@ -35,6 +35,14 @@ body {
   overflow: hidden;
 }
 
+@media (max-width: 1023px) {
+  body {
+    height: auto;
+    min-height: 100vh;
+    overflow: auto;
+  }
+}
+
 h1 {
   font-size: 3.2em;
   line-height: 1.1;
@@ -87,6 +95,9 @@ p:first-child {
     height: auto;
     padding: 15px;
     transform: translateZ(0);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
   }
 }
 
@@ -120,6 +131,8 @@ p:first-child {
     height: auto;
     padding: 2rem 1rem;
     flex-direction: column;
+    flex: 1;
+    display: flex;
   }
 
   .demo-container {
@@ -157,7 +170,7 @@ p:first-child {
   flex-direction: column;
   gap: 2rem;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   margin: 0;
   padding: 1rem;
   box-sizing: border-box;
@@ -205,6 +218,11 @@ p:first-child {
 }
 
 @media (max-width: 1023px) {
+  .main-container {
+    height: auto;
+    min-height: 100vh;
+  }
+  
   #settings, #controls {
     padding: 1rem;
     align-items: center;
@@ -365,6 +383,15 @@ p:first-child {
   }
 }
 
+@media (max-width: 1023px) {
+  .wrapper {
+    height: auto;
+    min-height: 100%;
+    justify-content: flex-start;
+    padding: 1rem 0;
+  }
+}
+
 
 .card {
   padding: 2rem;
@@ -386,6 +413,15 @@ p:first-child {
   justify-content: center;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
   flex-shrink: 0;
+}
+
+@media (max-width: 1023px) {
+  .demo-card {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    min-height: 120px;
+  }
 }
 
 
